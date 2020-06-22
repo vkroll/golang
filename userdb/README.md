@@ -5,7 +5,11 @@ userdb is a user administration for web projects. It got on my nerves to build s
 package userdb // import "github.com/vkroll/golang/userdb"
 
 func CreateUser(u string, p []byte) (bool, error)
+
 func LoadUsers()
+
 func SaveUsers()
+
 func UserExists(u string) bool
+
 func ValidateUser(u string, p []byte) bool
