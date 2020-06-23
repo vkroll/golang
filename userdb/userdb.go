@@ -14,11 +14,9 @@ import (
 type User struct {
 	Username string
 	Password []byte
-	Id       string
 }
 
 var users = map[string]User{}
-var idUsers = map[string]User{}
 
 func CreateUser(u string, p []byte) (bool, error) {
 	if UserExists(u) {
@@ -28,14 +26,14 @@ func CreateUser(u string, p []byte) (bool, error) {
 	if err != nil {
 		panic(err)
 	}
-	user := User{Username: u, Password: password, Id: u}
+	user := User{Username: u, Password: password}
 	users[u] = user
 	//log.Print(users)
 	return true, nil
 }
 
 func UserExists(u string) bool {
-	_, ok := idUsers[u]
+	_, ok := users[u]
 	return ok
 }
 
@@ -69,7 +67,7 @@ func LoadUsers() {
 		panic(err)
 	}
 	for _, u := range users {
-		idUsers[u.Id] = u
+		users[u.Username] = u
 	}
 }
 
