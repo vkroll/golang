@@ -2,6 +2,7 @@ package userdb
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -37,18 +38,19 @@ func UserExists(u string) bool {
 	return ok
 }
 
-func ValidateUser(u string, p []byte) bool {
+// ValidateUser checks if username and password are correct
+func ValidateUser(u string, p []byte) (bool, error) {
 	U, ok := users[u]
 	if !ok {
-		return false
+		return false, errors.New("user does not exist")
 	}
 
 	err := bcrypt.CompareHashAndPassword(U.Password, p)
 	if err != nil {
 		log.Printf("Login failed for %s", u)
-		return false
+		return false, errors.New("Login failed")
 	}
-	return true
+	return true, nil
 
 }
 

@@ -6,14 +6,16 @@ import (
 
 func TestLogin(t *testing.T) {
 	LoadUsers()
-	if ValidateUser("vkroll2", []byte("mypassword")) {
+	b, e := ValidateUser("vkroll2", []byte("mypassword"))
+	if b {
 		t.Logf("ok for valid data %s", "vkroll2")
 
 	} else {
-		t.Fatalf("not ok for valid data %s", "vkroll2")
+		t.Fatalf("not ok for valid data %s %s", "vkroll2", e)
 
 	}
-	if !ValidateUser("foo", []byte("bar")) {
+	b, e = ValidateUser("foo", []byte("bar"))
+	if !b {
 		t.Logf("no login for bad data %s", "foo")
 	} else {
 		t.Fatalf("not ok for valid data %s", "foo")
